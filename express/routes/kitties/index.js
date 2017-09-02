@@ -37,8 +37,23 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   const kittyId = req.body.id;
   kitties.push(req.body);
-  const kitty = getKitty(kitties, kittyId)
-  res.status(200).json(kitty);  
+  const kitty = getKitty(kitties, kittyId);
+  res.status(200).json(kitty);
+});
+
+router.put('/:id', (req, res) => {
+  let kittyId = req.params.id;
+  for (let i = 0; i < kitties.length; i++) {
+    if ( kittyId.toString() === kitties[i].id.toString() ) {
+      kitties[i].name = req.body.name;
+      kitties[i].breed = req.body.breed;
+      kitties[i].likes = req.body.likes;
+      kitties[i].dislikes = req.body.dislikes;
+    }
+  }
+
+  let kitty = getKitty(kitties, kittyId);
+  res.status(200).json(kitty);
 });
 
 function getKitty(arr, id) {

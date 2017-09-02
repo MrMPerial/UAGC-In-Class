@@ -40,6 +40,21 @@ router.post('/', (req, res) => {
   res.status(200).json(puppy);
 });
 
+router.put('/:id', (req, res) => {
+  let puppyId = req.params.id;
+  for (let i = 0; i < puppies.length; i++) {
+    if ( puppyId.toString() === puppies[i].id.toString() ) {
+      puppies[i].name = req.body.name;
+      puppies[i].breed = req.body.breed;
+      puppies[i].likes = req.body.likes;
+      puppies[i].dislikes = req.body.dislikes;
+    }
+  }
+
+  let puppy = getPuppy(puppies, puppyId);
+  res.status(200).json(puppy);
+});
+
 function getPuppy(arr, id) {
   let puppy;
   for (let i = 0; i < arr.length; i++) {
