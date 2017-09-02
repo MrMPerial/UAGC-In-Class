@@ -25,7 +25,16 @@ const puppies = [
 ];
 
 router.get('/', (req, res) => {
-  res.status(200).json(puppies);
+  const breed = req.query.sortBy;
+  let puppyData;
+
+  if (breed) {
+    puppyData = sortByBreed(puppies);
+  } else {
+    puppyData = puppies;
+  }
+
+  res.status(200).json(puppyData);
 });
 
 router.get('/:id', (req, res) => {
@@ -64,6 +73,25 @@ function getPuppy(arr, id) {
   }
 
   return puppy;
+}
+
+function sortByBreed(arr) {
+  let newArr = [];
+  for (let i = 0; i < arr.length; i++) {
+    newArr.push(arr[i]);
+  }
+
+  return newArr.sort((a, b) => {
+    if ( a.breed.toLowerCase() < b.breed.toLowerCase() ) {
+      return -1;
+    }
+
+    if ( a.breed.toLowerCase() > b.breed.toLowerCase() ) {
+      return 1;
+    }
+
+    return 0;
+  });
 }
 
 module.exports = router;

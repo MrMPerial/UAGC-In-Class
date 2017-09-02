@@ -5,7 +5,7 @@ const kitties = [
   {
     id: 1,
     name: 'ralph',
-    breed: 'black',
+    breed: 'tuxedo',
     likes: ['head boops', 'laying on the couch'],
     dislikes: ['hugs']
   },
@@ -19,14 +19,23 @@ const kitties = [
   {
     id: 3,
     name: 'bobby',
-    breed: 'tuxedo',
+    breed: 'black',
     likes: ['nothing'],
     dislikes: ['everything']
   }
 ];
 
 router.get('/', (req, res) => {
-  res.status(200).json(kitties);
+  const breed = req.query.sortBy;
+  let kittyData;
+
+  if (breed) {
+    kittyData = sortByBreed(kitties);
+  } else {
+    kittyData = kitties;
+  }
+
+  res.status(200).json(kittyData);
 });
 
 router.get('/:id', (req, res) => {
@@ -65,6 +74,25 @@ function getKitty(arr, id) {
   }
 
   return kitty;
+}
+
+function sortByBreed(arr) {
+  let newArr = [];
+  for (let i = 0; i < arr.length; i++) {
+    newArr.push(arr[i]);
+  }
+
+  return newArr.sort((a, b) => {
+    if ( a.breed.toUpperCase() < b.breed.toUpperCase() ) {
+      return -1;
+    }
+
+    if ( a.breed.toUpperCase() > b.breed.toUpperCase() ) {
+      return 1;
+    }
+
+    return 0;
+  });
 }
 
 module.exports = router;
