@@ -28,4 +28,15 @@ router.get('/', (req, res) => {
   res.status(200).json(puppies);
 });
 
+router.get('/:id', (req, res) => {
+  let puppy;
+  for (let i = 0; i < puppies.length; i++) {
+    if ( req.params.id.toString() === puppies[i].id.toString() ) {
+      puppy = puppies[i];
+    }
+  }
+
+  res.status(200).json(puppy);
+});
+
 module.exports = router;

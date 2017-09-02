@@ -28,4 +28,15 @@ router.get('/', (req, res) => {
   res.status(200).json(kitties);
 });
 
+router.get('/:id', (req, res) => {
+  let kitty;
+  for (let i = 0; i < kitties.length; i++) {
+    if ( req.params.id.toString() === kitties[i].id.toString() ) {
+      kitty = kitties[i];
+    }
+  }
+
+  res.status(200).json(kitty);
+});
+
 module.exports = router;
