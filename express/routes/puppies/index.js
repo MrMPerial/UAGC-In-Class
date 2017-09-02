@@ -29,14 +29,26 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
+  let puppy = getPuppy(puppies, req.params.id);
+  res.status(200).json(puppy);
+});
+
+router.post('/', (req, res) => {
+  const puppyId = req.body.id;
+  puppies.push(req.body);
+  const puppy = getPuppy(puppies, puppyId);
+  res.status(200).json(puppy);
+});
+
+function getPuppy(arr, id) {
   let puppy;
-  for (let i = 0; i < puppies.length; i++) {
-    if ( req.params.id.toString() === puppies[i].id.toString() ) {
-      puppy = puppies[i];
+  for (let i = 0; i < arr.length; i++) {
+    if ( id.toString() === arr[i].id.toString() ) {
+      puppy = arr[i];
     }
   }
 
-  res.status(200).json(puppy);
-});
+  return puppy;
+}
 
 module.exports = router;

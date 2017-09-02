@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const fs = require('fs');
 
 const kitties = [
   {
@@ -29,14 +30,26 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
+  let kitty = getKitty(kitties, req.params.id);
+  res.status(200).json(kitty);
+});
+
+router.post('/', (req, res) => {
+  const kittyId = req.body.id;
+  kitties.push(req.body);
+  const kitty = getKitty(kitties, kittyId)
+  res.status(200).json(kitty);  
+});
+
+function getKitty(arr, id) {
   let kitty;
-  for (let i = 0; i < kitties.length; i++) {
-    if ( req.params.id.toString() === kitties[i].id.toString() ) {
-      kitty = kitties[i];
+  for (let i = 0; i < arr.length; i++) {
+    if ( id.toString() === arr[i].id.toString() ) {
+      kitty = arr[i];
     }
   }
 
-  res.status(200).json(kitty);
-});
+  return kitty;
+}
 
 module.exports = router;
