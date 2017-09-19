@@ -44,4 +44,8 @@ let users = [
   }
 ];
 
+module.exports = users;
+
 console.log(users);
+console.log('');
+console.log("The user " + users[0].username + " was created on " + users[0].created + " with the ID: " + users[0].id);
