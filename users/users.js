@@ -7,7 +7,8 @@ let users = [
     firstname: "Chris",
     lastname: "Mitchell",
     password: "myname",
-    id: uuidv4(),
+    id: "c086a982-2a5c-49a8-ab04-36b052e695d9",
+    /*id: uuidv4()*/
     created: moment().format("YYYY-MM-DD")
   },
   {
@@ -15,7 +16,7 @@ let users = [
     firstname: "Christopher",
     lastname: "Mitchell",
     password: "myothername",
-    id: uuidv4(),
+    id: "6ab3bc82-bd43-404d-904b-735e9a5bd2c0",
     created: moment().format("YYYY-MM-DD")
   },
   {
@@ -23,7 +24,7 @@ let users = [
     firstname: "sirhC",
     lastname: "llehctiM",
     password: "backwardsname",
-    id: uuidv4(),
+    id: "109156be-c4fb-41ea-b1b4-efe1671c5836",
     created: moment().format("YYYY-MM-DD")
   },
   {
@@ -31,7 +32,7 @@ let users = [
     firstname: "SomeOne",
     lastname: "Else",
     password: "thisguy",
-    id: uuidv4(),
+    id: "01cf7d16-906c-4fc8-9a39-e572f9ba710d",
     created: moment().format("YYYY-MM-DD")
   },
   {
@@ -39,13 +40,9 @@ let users = [
     firstname: "Jack",
     lastname: "Frost",
     password: "socold",
-    id: uuidv4(),
+    id: "153b5d77-a27e-452c-8d50-6c40a1a0e2f7",
     created: moment().format("YYYY-MM-DD")
   }
 ];
 
 module.exports = users;
-
-console.log(users);
-console.log('');
-console.log("The user " + users[0].username + " was created on " + users[0].created + " with the ID: " + users[0].id);
