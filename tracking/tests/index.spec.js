@@ -9,21 +9,21 @@ chai.use(chaiHttp);
 
 describe('Routes', () => {
   describe('GET /tracking', () => {
-    it('Should return status of 200 and attempts are less than 6', (done) => {
-      chai.request(server)
-      .get('/tracking?username=chris&currentDate=2017-09-27')
-      .end((err, res) => {
-        expect(err).to.be.null;
-        expect(res).to.have.status(200);
-        done();
-      });
-    });
     it('Should return a status of 403 if no queries are passed', (done) => {
       chai.request(server)
       .get('/tracking')
       .end((err, res) => {
         expect(err).to.be.not.null;
         expect(res).to.have.status(403);
+        done();
+      });
+    });
+    it('Should return status of 200 and attempts are less than 6', (done) => {
+      chai.request(server)
+      .get('/tracking?username=chris&currentDate=2017-09-27')
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(200);
         done();
       });
     });
