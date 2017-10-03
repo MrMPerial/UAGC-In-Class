@@ -37,8 +37,8 @@ app.get('/tracking', (req, res, next) => {
 });
 
 app.use(errorMW);
-app.listen(3005, () => {
-  console.log('Running on 3002');
+app.listen(3002, () => {
+  console.log('Tracking is listening on port 3002!');
 });
 
 module.exports = app;

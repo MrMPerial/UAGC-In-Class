@@ -28,7 +28,7 @@ app.get('/users/:id', (req, res, next) => {
   } else {
     next('this user does not exist');
   }
-  
+
 });
 
 app.post('/', (req, res, next) => {
@@ -48,7 +48,7 @@ app.post('/', (req, res, next) => {
 
 app.use(errMiddleware);
 app.listen(3001, () => {
-  console.log("Listening on 3001");
+  console.log('Users is listening on port 3001!');
 });
 
 module.exports = app;
