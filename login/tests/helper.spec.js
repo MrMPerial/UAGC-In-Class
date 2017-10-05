@@ -1,7 +1,12 @@
 const chai = require('chai');
+const mockery = require('mockery');
+// or proxyquire
 const helper = require('../helper');
 
 const expect = chai.expect;
+
+let helpers;
+let requestStub;
 
 describe('Helper', () => {
   describe('Utility', () => {
@@ -37,14 +42,14 @@ describe('Helper', () => {
     // });
     // Correct method
     it('Should return an object with a res and body property', () => {
-      
+
     });
     it('Should return a 404 error when calling a non-existent url', (done) => {
       helper.sendRequest('http://localhost:3001/notaurl'.then((result) => {
         expect(result.statusCode).to.be(404);
       })
       .catch((err) => {
-        expect(err).to.not.be.null;
+        expect(err).to.be.not.null;
         done();
       });
     });

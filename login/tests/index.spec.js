@@ -12,7 +12,7 @@ describe('Routes', () => {
       chai.request(server)
       .get('/')
       .end((err, res) => {
-        expect(err).to.not.be.null,
+        expect(err).to.be.not.null,
         expect(res).to.have.status(200);
         done();
       });
