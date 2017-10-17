@@ -1,7 +1,8 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+
 const mongodb = require('./mongodb.utils');
 const Puppy = require('./puppy.model');
-const bodyParser = require('body-parser');
 
 const app = express();
 
@@ -15,7 +16,8 @@ app.get('/', (req, res) => {
   .then((results) => {
     console.log(results);
     res.status(200).send(results);
-  }).catch((err) => {
+  })
+  .catch((err) => {
     console.log(err);
     res.status(404);
   });
@@ -33,7 +35,8 @@ app.post('/puppies', (req, res) => {
   puppy.save()
   .then((results) => {
     console.log(results);
-  }).catch((err) => {
+  })
+  .catch((err) => {
     throw(err);
   });
 });
