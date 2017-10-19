@@ -2,8 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const mongodb = require('./mongodb.utils');
-const Author = require('./author.model');
-const Book = require('./book.model');
+const libraryService = require('./library.service');
 
 mongodb.createEventListeners();
 mongodb.connect();
@@ -16,133 +15,93 @@ app.get('/', (req, res) => {
   res.send('Root Endpoint');
 });
 
-app.get('/firstname', (req, res) => {
-  // Couldn't get query to work
-  Author.find({}).select('firstname').exec()
-  .then((result) => {
-    res.status(200).json(result);
+app.get('/allAuthors', (req, res) => {
+  libraryService.fetchAllAuthors()
+  .then((authorsFetched) => {
+    res.status(200).send(authorsFetched);
   })
   .catch((err) => {
-    res.status(404).send('No Author Found!');
+    res.status(500).send(err);
   });
 });
 
-app.get('/lastname', (req, res) => {
-  // Couldn't get query to work
-  Author.find({}).select('lastname').exec()
-  .then((result) => {
-    res.status(200).send(result);
+app.get('/searchByFirst', (req, res) => {
+  libraryService.searchByFirstname(req.query.firstname)
+  .then((authorFetched) => {
+    res.status(200).send(authorFetched);
   })
   .catch((err) => {
-    res.status(404).send('No Author Found!');
+    res.status(500).send(err);
   });
 });
 
-app.get('/book', (req, res) => {
-  // Couldn't get query to work
-  Author.find({}).select('books').exec()
-  .then((result) => {
-    res.status(200).send(result);
+app.get('/searchByLast', (req, res) => {
+  libraryService.searchByLastname(req.query.lastname)
+  .then((authorFetched) => {
+    res.status(200).send(authorFetched);
   })
   .catch((err) => {
-    res.status(404).send('No Author Found!');
+    res.status(500).send(err);
+  });
+});
+
+// TODO: Fix this...
+app.get('/searchByBook', (req, res) => {
+  libraryService.searchByBook(req.query.books)
+  .then((bookFetched) => {
+    res.status(200).send(bookFetched);
+  })
+  .catch((err) => {
+    res.status(500).send(err);
   });
 });
 
 app.post('/newAuthor', (req, res) => {
-  const newAuthor = new Author({
-    firstname: req.body.firstname,
-    lastname: req.body.lastname
-  });
-
-  newAuthor.save()
-  .then((result) => {
-    res.status(200).json(result);
+  libraryService.addNewAuthor(req.body.firstname, req.body.lastname)
+  .then((authorAdded) => {
+    res.status(200).json(authorAdded);
   })
   .catch((err) => {
-    res.status(500).send('Looks like something went wrong...');
+    res.status(500).send(err);
   });
 });
 
 app.post('/newBook', (req, res) => {
-  // Author.find({ firstname: 'Shirley', lastname: 'Jackson'}).exec()
-  // .then((authorResult) => {
-  //   const shirleyJackson = authorResult[0];
-  //   const weHaveAlways = new Book({
-  //     title: 'We Have Always Lived In The Castle',
-  //     author: shirleyJackson._id
-  //   });
-  //   return weHaveAlways.save();
-  // })
-  // .then((bookResult) => {
-  //   console.log(bookResult);
-  //   mongodb.disconnect();
-  // })
-  // .catch((err) => {
-  //   console.log(err);
-  //   mongodb.disconnect();
-  // });
-  res.send('Connected to newBook Endpoint');
+  let bookData = req.body.book;
+
+  libraryService.addNewBook(bookData)
+  .then((bookSaved) => {
+    res.status(200).send(bookSaved);
+  })
+  .catch((err) => {
+    res.status(500).send(err);
+  });
 });
 
 app.put('/updateAuthor', (req, res) => {
-  res.send('Connected to updateAuthor Endpoint');
+  let authorData = req.body.author;
+
+  libraryService.updateAuthor(authorData)
+  .then((authorUpdated) => {
+    res.status(200).send(authorUpdated);
+  })
+  .catch((err) => {
+    res.status(500).send(err);
+  });
 });
 
 app.put('/updateBook', (req, res) => {
-  res.send('Connected to updateBook Endpoint');
+  let bookData = req.body.book;
+
+  libraryService.updateBook(bookData)
+  .then((bookUpdated) => {
+    res.status(200).send(bookUpdated);
+  })
+  .catch((err) => {
+    res.status(500).send(err);
+  });
 });
 
 app.listen(3000, () => {
   console.log('Listening on 3000');
 });
-
-
-
-
-
-
-
-// Book.find({ title: 'We Have Always Lived In The Castle'}).populate('author').exec()
-// .then((result) => {
-//   console.log(result);
-// })
-// .catch((err) => {
-//   console.log(err);
-// });
-
-// let foundBook;
-// Book.find({ title: 'We Have Always Lived In The Castle' }).exec()
-// .then((bookResult) => {
-//   foundBook = bookResult[0];
-//   return Author.find({ firstname: 'Shirley', lastname: 'Jackson' }).exec();
-// })
-// .then((authorResult) => {
-//   let author = authorResult[0];
-//   author.books.push(foundBook._id);
-//   return author.save();
-// })
-// .then((result) => {
-//   console.log(result);
-// })
-// .catch((err) => {
-//   console.log(err);
-// });
-
-// Author.find({ firstname: 'Shirley', lastname: 'Jackson'}).exec()
-// .then((authorResult) => {
-//   const shirleyJackson = authorResult[0];
-//   const weHaveAlways = new Book({
-//     title: 'We Have Always Lived In The Castle',
-//     author: shirleyJackson._id
-//   });
-//   return weHaveAlways.save();
-// })
-// .then((bookResult) => {
-//   console.log(bookResult);
-//   mongodb.disconnect();
-// })
-// .catch((err) => {
-//   console.log(err);
-//   mongodb.disconnect();
-// });
