@@ -9,7 +9,7 @@ module.exports = {
 };
 
 function connect() {
-  const uri = 'mongodb://localhost/library';
+  const uri = 'mongodb://mrmperial:1ogocm3eat@ds229415.mlab.com:29415/thelibrary';
   mongoose.connect(uri, { useMongoClient: true });
 }
 
