@@ -9,6 +9,8 @@ mongodb.connect();
 
 const app = express();
 
+const PORT = process.env.PORT || 8080;
+
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
@@ -102,6 +104,6 @@ app.put('/updateBook', (req, res) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log('Listening on 3000');
+app.listen(PORT, () => {
+  console.log(`Listening on ${PORT}`);
 });
