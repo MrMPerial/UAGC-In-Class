@@ -128,3 +128,9 @@ model.find({prop: 'string'})
 .catch((err) => {
   console.log(err);
 });
+
+// SSL Key Generation
+/* === openssl genrsa -out my-key.pem 1024 === */
+
+// SSL Cert Generation
+/* === openssl req -new -key my-key.pem -out certrequest.csr === */
