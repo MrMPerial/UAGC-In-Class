@@ -134,3 +134,9 @@ model.find({prop: 'string'})
 
 // SSL Cert Generation
 /* === openssl req -new -key my-key.pem -out certrequest.csr === */
+
+interface GroceryItem {
+  item: string;
+  walmartPrice: number;
+  costcoPrice: number;
+}
